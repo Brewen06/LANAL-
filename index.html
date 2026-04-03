@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LANAL− | L'encyclopédie qui ne vous demande pas la carte</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Source+Serif+4:wght@300;400;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --noir: #0a0a0a;
+      --blanc: #f5f2eb;
+      --rouge: #d42b2b;
+      --gris: #b0a99a;
+      --gris-clair: #e8e3d9;
+      --or: #c9a84c;
+      --encre: #1c1c2e;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--blanc);
+      color: var(--encre);
+      font-family: 'Source Serif 4', serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── BARRE D'ALERTE ─── */
+    .alert-bar {
+      background: var(--rouge);
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      padding: 6px 0;
+      text-align: center;
+      overflow: hidden;
+    }
+    .alert-bar span {
+      display: inline-block;
+      animation: ticker 28s linear infinite;
+      white-space: nowrap;
+    }
+    @keyframes ticker {
+      0%   { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: var(--noir);
+      color: var(--blanc);
+      padding: 0 2rem;
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 1rem;
+      border-bottom: 3px solid var(--rouge);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 1rem 0;
+      border-right: 1px solid #333;
+      padding-right: 2rem;
+    }
+
+    .logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--blanc);
+    }
+    .logo-name .minus {
+      color: var(--rouge);
+      font-size: 3.5rem;
+      position: relative;
+      top: 2px;
+    }
+    .logo-tagline {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--gris);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      flex: 1;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 0.8rem 0;
+    }
+    nav a {
+      color: var(--gris);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+    nav a:hover {
+      color: var(--blanc);
+      border-color: var(--rouge);
+    }
+
+    .header-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      padding-left: 2rem;
+      border-left: 1px solid #333;
+    }
+    .search-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .search-wrap input {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      color: var(--blanc);
+      padding: 5px 10px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      width: 180px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-wrap input::placeholder { color: #555; }
+    .search-wrap input:focus { border-color: var(--rouge); }
+    .search-wrap button {
+      background: var(--rouge);
+      border: none;
+      color: #fff;
+      padding: 5px 10px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .search-wrap button:hover { background: #a01e1e; }
+    .header-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--or);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--noir);
+      color: var(--blanc);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 420px;
+      border-bottom: 4px solid var(--rouge);
+    }
+
+    .hero-main {
+      padding: 3.5rem 3rem;
+      border-right: 1px solid #2a2a2a;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--rouge);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .hero-excerpt {
+      font-size: 1.05rem;
+      color: #aaa;
+      line-height: 1.8;
+      max-width: 500px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--blanc);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-bottom: 2px solid var(--rouge);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+    .hero-cta:hover { color: var(--rouge); }
+
+    .hero-side {
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-side-item {
+      flex: 1;
+      padding: 1.8rem 2rem;
+      border-bottom: 1px solid #2a2a2a;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .hero-side-item:last-child { border-bottom: none; }
+    .hero-side-item:hover { background: #141414; }
+    .side-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--gris);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .side-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 0.4rem;
+    }
+    .side-excerpt {
+      font-size: 0.82rem;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    /* ─── LAYOUT PRINCIPAL ─── */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 0;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .content-area { padding: 3rem 3rem 3rem 3rem; border-right: 1px solid var(--gris-clair); }
+    .sidebar { padding: 2.5rem 2rem; }
+
+    /* ─── SECTION TITRE ─── */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 2px solid var(--noir);
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .section-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--gris);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ─── GRILLE ARTICLES ─── */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--gris-clair);
+      border: 2px solid var(--gris-clair);
+      margin-bottom: 3rem;
+    }
+    .article-card {
+      background: var(--blanc);
+      padding: 1.6rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .article-card:hover { background: #f0ece3; }
+    .article-card.featured {
+      grid-column: span 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    .card-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--rouge);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 0.6rem;
+      color: var(--encre);
+    }
+    .card-title.large { font-size: 1.7rem; }
+    .card-text {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: #444;
+    }
+    .card-meta {
+      margin-top: 1rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--gris);
+      letter-spacing: 0.08em;
+    }
+    .card-image {
+      width: 100%;
+      height: 160px;
+      background: var(--encre);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--gris);
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 4px,
+        rgba(255,255,255,0.03) 4px,
+        rgba(255,255,255,0.03) 8px
+      );
+    }
+
+    /* ─── ENCYCLOPÉDIE VEDETTE ─── */
+    .encyclo-entry {
+      background: var(--encre);
+      color: var(--blanc);
+      padding: 2.5rem;
+      margin-bottom: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .encyclo-entry::before {
+      content: '§';
+      position: absolute;
+      right: 1.5rem;
+      top: 1rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 8rem;
+      color: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .encyclo-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--or);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .encyclo-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .encyclo-phonetics {
+      font-family: 'Source Serif 4', serif;
+      font-style: italic;
+      color: var(--gris);
+      font-size: 0.9rem;
+      margin-bottom: 1.2rem;
+    }
+    .encyclo-body {
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: #ccc;
+      columns: 2;
+      column-gap: 2.5rem;
+    }
+    .encyclo-body p { margin-bottom: 0.8rem; break-inside: avoid; }
+    .encyclo-note {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid #333;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
+      color: #666;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── RSS / ACTUALITÉS ─── */
+    .rss-section { margin-bottom: 3rem; }
+    .rss-feed {
+      border: 1px solid var(--gris-clair);
+    }
+    .rss-item {
+      padding: 1.2rem 1.5rem;
+      border-bottom: 1px solid var(--gris-clair);
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+    .rss-item:last-child { border-bottom: none; }
+    .rss-item:hover { background: var(--gris-clair); }
+    .rss-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gris-clair);
+      line-height: 1;
+      min-width: 28px;
+    }
+    .rss-item:hover .rss-num { color: var(--rouge); }
+    .rss-content {}
+    .rss-source {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--rouge);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+    .rss-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 0.2rem;
+    }
+    .rss-date {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--gris);
+    }
+    .rss-loading {
+      padding: 2rem;
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--gris);
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar-widget {
+      margin-bottom: 2.5rem;
+    }
+    .widget-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--rouge);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--gris-clair);
+    }
+
+    /* Abonné du jour */
+    .card-abonne {
+      background: var(--encre);
+      color: var(--blanc);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .abonne-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .abonne-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .abonne-desc {
+      font-size: 0.78rem;
+      color: var(--gris);
+      line-height: 1.6;
+    }
+
+    /* Stats absurdes */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      background: var(--gris-clair);
+    }
+    .stat-item {
+      background: var(--blanc);
+      padding: 1rem;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--rouge);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--gris);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.3rem;
+    }
+
+    /* Lexique */
+    .lexique-item {
+      padding: 0.8rem 0;
+      border-bottom: 1px dashed var(--gris-clair);
+    }
+    .lexique-item:last-child { border-bottom: none; }
+    .lex-term {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--encre);
+    }
+    .lex-def {
+      font-size: 0.78rem;
+      color: #666;
+      line-height: 1.6;
+      margin-top: 0.15rem;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--noir);
+      color: var(--gris);
+      padding: 3rem;
+      margin-top: 4rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 2.5rem;
+      border-top: 3px solid var(--rouge);
+    }
+    .footer-brand .logo-name { font-size: 2rem; margin-bottom: 0.5rem; }
+    .footer-tagline {
+      font-size: 0.78rem;
+      color: #555;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    .footer-legal {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem;
+      color: #444;
+      letter-spacing: 0.05em;
+      line-height: 1.8;
+    }
+    .footer-col-title {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--rouge);
+      margin-bottom: 1rem;
+    }
+    .footer-links { list-style: none; }
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
+    .footer-links a {
+      color: #666;
+      text-decoration: none;
+      font-size: 0.82rem;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--blanc); }
+    .footer-bottom {
+      background: #050505;
+      color: #333;
+      text-align: center;
+      padding: 1rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    /* ─── TOAST / NOTIFICATION ─── */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--noir);
+      color: var(--blanc);
+      border-left: 3px solid var(--rouge);
+      padding: 1rem 1.5rem;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      max-width: 280px;
+      z-index: 999;
+      transform: translateX(140%);
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .toast.show { transform: translateX(0); }
+    .toast-title {
+      color: var(--or);
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ─── MODAL ENCYCLOPÉDIE ─── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal {
+      background: var(--blanc);
+      max-width: 700px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 3rem;
+      position: relative;
+      transform: translateY(20px);
+      transition: transform 0.3s;
+    }
+    .modal-overlay.active .modal { transform: translateY(0); }
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      cursor: pointer;
+      color: var(--gris);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .modal-close:hover { color: var(--rouge); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-side { display: none; }
+      .main-layout { grid-template-columns: 1fr; }
+      .content-area { padding: 2rem 1.5rem; }
+      .sidebar { padding: 0 1.5rem 2rem; }
+      .articles-grid { grid-template-columns: 1fr; }
+      .article-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+      .encyclo-body { columns: 1; }
+      footer { grid-template-columns: 1fr; gap: 1.5rem; }
+      header { flex-wrap: wrap; padding: 1rem; }
+      .logo-block { border: none; padding-right: 0; }
+      .header-right { border: none; padding-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- BARRE D'ALERTE -->
+<div class="alert-bar">
+  <span>⚠ AVERTISSEMENT : La lecture de LANAL− peut provoquer des crises de lucidité, des hausses de QI non désirées, et une résiliation immédiate de votre abonnement CANAL+ — Abonnés actuels : restez calmes, la carte reste valide jusqu'à ce qu'elle ne le soit plus — Pour toute réclamation, contactez notre service client au 08-LANAL-MOINS — Tous droits réservés, sauf le bon sens</span>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-block">
+    <div class="logo-name">LANAL<span class="minus">−</span></div>
+    <div class="logo-tagline">L'encyclopédie qui ne vous demande pas la carte</div>
+  </div>
+  <nav>
+    <a href="#" onclick="showModal('Cinéma')">Cinéma</a>
+    <a href="#" onclick="showModal('Sport')">Sport</a>
+    <a href="#" onclick="showModal('Séries')">Séries</a>
+    <a href="#" onclick="showModal('Abonnements')">Abonnements</a>
+    <a href="#" onclick="showModal('Cryptologie')">Cryptologie</a>
+    <a href="#" onclick="showModal('Cryptologie')">Le Zapping</a>
+    <a href="#" onclick="showModal('Archives')">Archives</a>
+    <a href="#" onclick="showModal('Petite Chaîne')">La Petite Chaîne</a>
+  </nav>
+  <div class="header-right">
+    <div class="search-wrap">
+      <input type="text" id="searchInput" placeholder="Chercher un article..." onkeydown="handleSearch(event)"/>
+      <button onclick="handleSearchBtn()">OK</button>
+    </div>
+    <div class="header-badge">⬤ Diffusion non cryptée — pour l'instant</div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-main">
+    <div>
+      <div class="hero-label">Article du jour — Encyclopédie vivante</div>
+      <h1 class="hero-title">Le Décodeur :<br/>objet de culte ou arme de destruction massive des soirées ?</h1>
+      <p class="hero-excerpt">Étude approfondie d'un boîtier mystérieux qui clignote la nuit, émet des mises à jour au moment de regarder un film, et développe une relation codépendante avec votre télécommande.</p>
+      <a href="#" class="hero-cta" onclick="openEncycloEntry()">Lire l'article complet →</a>
+    </div>
+    <div class="card-meta">Par Prof. Lucien Brouille · Mis à jour : 03 avril 2026 · 2 342 lectures · Note : ★★★★☆ (par des gens qui n'ont pas pu regarder)</div>
+  </div>
+  <div class="hero-side">
+    <div class="hero-side-item" onclick="showModal('La carte')">
+      <div class="side-label">Droit canonique</div>
+      <div class="side-title">La Carte : mythe ou légende médiévale ?</div>
+      <div class="side-excerpt">Personne ne l'a jamais vue, mais tout le monde en parle. Enquête au cœur de la plus grande fraude documentaire du XXe siècle.</div>
+    </div>
+    <div class="hero-side-item" onclick="showModal('Cryptage')">
+      <div class="side-label">Technologie avancée</div>
+      <div class="side-title">Le Cryptage : pourquoi le signal part toujours au mauvais moment</div>
+      <div class="side-excerpt">Une analyse thermodynamique du phénomène d'"image gelée au penalty".</div>
+    </div>
+    <div class="hero-side-item" onclick="showModal('Programme')">
+      <div class="side-label">Philosophie du dimanche</div>
+      <div class="side-title">Le Programme : pourquoi le meilleur film passe toujours à 2h du matin</div>
+      <div class="side-excerpt">Théorie du complot ou simple algorithme sadique ? Nos experts ont regardé les grilles de programme depuis 1984.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN LAYOUT -->
+<div class="main-layout">
+  <main class="content-area">
+
+    <!-- ENCYCLOPÉDIE VEDETTE -->
+    <div class="section-header">
+      <div class="section-title">Encyclopédie LANAL−</div>
+      <div class="section-sub">Savoir inutile depuis 1984</div>
+    </div>
+
+    <div class="encyclo-entry" id="encyclo-main">
+      <div class="encyclo-label">✦ Article encyclopédique de la semaine</div>
+      <div class="encyclo-title">LANAL−</div>
+      <div class="encyclo-phonetics">/la.nal mwɛ̃/ — nom commun, masculin ou féminin selon l'humeur du prestataire</div>
+      <div class="encyclo-body">
+        <p><strong>LANAL−</strong> (anciennement connu sous le nom de "votre chaîne préférée que vous ne regardez plus vraiment") est un groupe audiovisuel français fondé à une date que personne n'a réussi à retrouver car les archives sont cryptées.</p>
+        <p>Le nom LANAL− se distingue de son prédécesseur par l'adoption du signe <em>moins</em> (−) à la place du <em>plus</em> (+), symbolisant philosophiquement la promesse de services supplémentaires systématiquement retranchés de l'offre de base.</p>
+        <p>L'entreprise est célèbre pour avoir inventé le concept de "l'abonnement qui part tout seul", ainsi que pour son service client, classé 3ème meilleur simulateur d'attente infinie après le DMV californien et le guichet SNCF du vendredi soir.</p>
+        <p>Son emblème historique, un carré légèrement incliné, symbolise selon les exégètes soit la modernité, soit un fromage vu de dessus, soit rien du tout — les avis divergent.</p>
+      </div>
+      <div class="encyclo-note">Voir aussi : Abonnement fantôme · Décodeur perpétuel · Grille de programme kafkaïenne · La Carte (mythologie moderne)</div>
+    </div>
+
+    <!-- GRILLE ARTICLES -->
+    <div class="section-header">
+      <div class="section-title">Derniers articles</div>
+      <div class="section-sub">Tous vérifiés par au moins une personne</div>
+    </div>
+
+    <div class="articles-grid">
+      <div class="article-card featured">
+        <div>
+          <div class="card-image">[ Illustration : L'Abonné en train de chercher la télécommande ]</div>
+          <div class="card-label">Grand Reportage</div>
+          <h2 class="card-title large">La Télécommande Perdue : récit d'une odyssée domestique</h2>
+        </div>
+        <div>
+          <p class="card-text">C'était un vendredi soir. Le film commençait dans trois minutes. La télécommande, elle, avait décidé de prendre un congé sabbatique entre les coussins du canapé. Ce récit haletant retrace douze minutes d'une quête qui faillit briser une famille.</p>
+          <p class="card-text" style="margin-top:0.8rem">À l'issue de l'enquête, les experts concluent à une probabilité de 94,7% que la télécommande était "sous les fesses" depuis le début.</p>
+          <div class="card-meta">Par Gaston Levoisin-Morel · 2 584 lectures · Catégorie : Tragédie domestique</div>
+        </div>
+      </div>
+
+      <div class="article-card" onclick="showModal('Abonnement')">
+        <div class="card-label">Économie comportementale</div>
+        <h3 class="card-title">L'Abonnement à vie : étude longitudinale sur 40 ans de prélèvements</h3>
+        <p class="card-text">Témoignages émouvants de personnes ayant oublié qu'elles étaient abonnées depuis l'époque du Minitel.</p>
+        <div class="card-meta">Par Mathieu Prélevé · 18 mars 2026</div>
+      </div>
+
+      <div class="article-card" onclick="showModal('Film en clair')">
+        <div class="card-label">Cinéphilie militante</div>
+        <h3 class="card-title">Le Film en Clair du Dimanche : anatomie d'une escroquerie culturelle</h3>
+        <p class="card-text">Il passe une fois par an. C'est toujours un film que tout le monde a déjà vu. Et pourtant, on le regarde quand même.</p>
+        <div class="card-meta">Par Zoé Pellerin-Bras · 25 mars 2026</div>
+      </div>
+
+      <div class="article-card" onclick="showModal('Foot')">
+        <div class="card-label">Sport de haut niveau</div>
+        <h3 class="card-title">Le But Retransmis en Différé : deuil et acceptation</h3>
+        <p class="card-text">Comment apprendre que votre équipe a perdu via Twitter avant même que le décodeur ait fini de charger.</p>
+        <div class="card-meta">Par Serge Décalé · 1er avril 2026</div>
+      </div>
+
+      <div class="article-card" onclick="showModal('Service client')">
+        <div class="card-label">Ethnologie contemporaine</div>
+        <h3 class="card-title">Le Service Client : une anthropologie du silence téléphonique</h3>
+        <p class="card-text">"Votre appel est important pour nous" — analyse sémiotique d'une phrase prononcée 4,7 milliards de fois sans jamais être vraie.</p>
+        <div class="card-meta">Par Hélène Raccroche · 30 mars 2026</div>
+      </div>
+    </div>
+
+    <!-- ACTUALITÉS RSS -->
+    <div class="rss-section">
+      <div class="section-header">
+        <div class="section-title">Dépêches & Actualités</div>
+        <div class="section-sub">Flux RSS en temps quasi-réel</div>
+      </div>
+      <div class="rss-feed" id="rss-feed">
+        <div class="rss-loading" id="rss-loading">⟳ Chargement des dépêches… (le décodeur redémarre)</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="sidebar-widget">
+      <div class="widget-title">✦ Abonné du mois</div>
+      <div class="card-abonne">
+        <div class="abonne-icon">🏆</div>
+        <div class="abonne-name">Marcel Dupont, 67 ans</div>
+        <div class="abonne-desc">Abonné depuis 1988 sans jamais avoir regardé plus de 40 minutes consécutives. Détenteur du record de l'abonnement le plus inutilisé d'Île-de-France.</div>
+      </div>
+    </div>
+
+    <div class="sidebar-widget">
+      <div class="widget-title">📊 Statistiques absurdes</div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-num">47</div>
+          <div class="stat-label">Redémarrages décodeur / an</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3h</div>
+          <div class="stat-label">Attente service client</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">0</div>
+          <div class="stat-label">Films vus jusqu'au bout</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Mises à jour en cours</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-widget">
+      <div class="widget-title">📖 Lexique LANAL−</div>
+      <div class="lexique-item">
+        <div class="lex-term">Le Cryptage</div>
+        <div class="lex-def">Tecnologie mystérieuse qui empêche de regarder ce pour quoi vous avez payé.</div>
+      </div>
+      <div class="lexique-item">
+        <div class="lex-term">La Carte Magnétique</div>
+        <div class="lex-def">Objet semi-mythologique. Certains l'ont vue. Moins l'ont encore.</div>
+      </div>
+      <div class="lexique-item">
+        <div class="lex-term">Mise à jour firmware</div>
+        <div class="lex-def">Procédure obligatoire qui démarre systématiquement au premier penalty.</div>
+      </div>
+      <div class="lexique-item">
+        <div class="lex-term">L'Offre Découverte</div>
+        <div class="lex-def">Porte d'entrée vers un engagement décennal présenté comme une faveur.</div>
+      </div>
+      <div class="lexique-item">
+        <div class="lex-term">Signal HD Optimal</div>
+        <div class="lex-def">État théorique jamais observé en conditions réelles.</div>
+      </div>
+    </div>
+
+    <div class="sidebar-widget">
+      <div class="widget-title">🗓 Agenda de la semaine</div>
+      <div class="lexique-item">
+        <div class="lex-term">Lundi — 21h05</div>
+        <div class="lex-def">Film que vous avez déjà vu trois fois. Vous le regarderez quand même.</div>
+      </div>
+      <div class="lexique-item">
+        <div class="lex-term">Mercredi — 23h30</div>
+        <div class="lex-def">Documentaire passionnant sur les insectes du Pérou. Aucun rapport avec votre recherche initiale.</div>
+      </div>
+      <div class="lexique-item">
+        <div class="lex-term">Dimanche — 14h</div>
+        <div class="lex-def">Match de football. Signal coupé à la 89e minute. Score inconnu.</div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="logo-name">LANAL<span class="minus">−</span></div>
+    <p class="footer-tagline">L'encyclopédie humoristique du groupe imaginaire LANAL−. Toute ressemblance avec un groupe audiovisuel réel, existant ou ayant existé, serait une coïncidence étrangement plausible.</p>
+    <div class="footer-legal">
+      Site parodique — Aucune affiliation avec CANAL+, Vivendi, ou tout autre groupe.<br>
+      Contenu humoristique protégé par le droit à la satire.<br>
+      © 2026 LANAL− Encyclopédie Libre — Tous droits inversés.
+    </div>
+  </div>
+  <div>
+    <div class="footer-col-title">Navigation</div>
+    <ul class="footer-links">
+      <li><a href="#">Accueil</a></li>
+      <li><a href="#">Encyclopédie</a></li>
+      <li><a href="#">Actualités</a></li>
+      <li><a href="#">Lexique</a></li>
+      <li><a href="#">Archives</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-col-title">Rubriques</div>
+    <ul class="footer-links">
+      <li><a href="#">Cinéma</a></li>
+      <li><a href="#">Sport</a></li>
+      <li><a href="#">Séries</a></li>
+      <li><a href="#">Abonnements</a></li>
+      <li><a href="#">Technologie</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-col-title">À propos</div>
+    <ul class="footer-links">
+      <li><a href="#">Notre équipe (fictive)</a></li>
+      <li><a href="#">Politique éditoriale</a></li>
+      <li><a href="#">Mentions légales</a></li>
+      <li><a href="#">Contact</a></li>
+      <li><a href="#" onclick="showToast('Flux RSS', 'Abonnez-vous à notre flux RSS pour ne rien rater de l\'actualité que nous inventons.')">Flux RSS</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  LANAL− ENCYCLOPÉDIE LIBRE — SITE PARODIQUE — AUCUNE PUBLICITÉ — AUCUNE CARTE REQUISE — SIGNAL PEUT-ÊTRE CRYPTÉ
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <div class="toast-title" id="toast-title"></div>
+  <div id="toast-body"></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModalDirect()">✕ Fermer</button>
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+// ─── DONNÉES ENCYCLOPÉDIQUES ───
+const articles = {
+  'Cinéma': {
+    titre: 'Cinéma',
+    phonetique: '/si.ne.ma/ — art septième, parfois huitième selon les délais de diffusion',
+    contenu: `<p>Le cinéma, selon LANAL−, désigne l'art de projeter des films que l'abonné aurait pu voir en salle six mois plus tôt pour le même prix que son abonnement mensuel.</p>
+    <p>Chez LANAL−, le cinéma se divise en deux catégories : les films "Exclusivités" (disponibles après leur sortie DVD), et les films "Inédits" (inconnus de tous les cinéphiles sérieux).</p>
+    <p>La grande innovation de LANAL− dans le domaine cinématographique reste l'invention du "générique interrompu" : une technologie propriétaire qui coupe la connexion exactement quand le nom du réalisateur apparaît.</p>`
+  },
+  'Sport': {
+    titre: 'Sport',
+    phonetique: '/spɔʁ/ — activité physique dont LANAL− détient les droits de retransmission partielle',
+    contenu: `<p>Le sport, dans l'univers LANAL−, est défini comme "tout événement dont les droits télévisés coûtent plus cher que le PIB d'un pays de taille moyenne".</p>
+    <p>La chaîne est particulièrement célèbre pour sa couverture du football, discipline qu'elle retransmet en intégralité sauf les buts, les corners décisifs, et les fins de match quand c'est intéressant.</p>
+    <p>L'expression "regarder le foot sur LANAL−" est aujourd'hui entrée dans le dictionnaire sous la définition : "espoir systématiquement déçu par une mise à jour firmware".</p>`
+  },
+  'Abonnement': {
+    titre: 'L\'Abonnement',
+    phonetique: '/a.bɔn.mɑ̃/ — contrat à durée indéterminée initialement présenté comme temporaire',
+    contenu: `<p>L'abonnement LANAL− est un document juridique d'une complexité comparable aux traités de Westphalie, mais rédigé en police taille 6 au dos d'un dépliant distribué dans les bureaux de tabac.</p>
+    <p>Historiquement, le premier abonnement LANAL− fut souscrit en 1984 par un certain Bernard M. qui, selon les archives, n'a jamais réussi à le résilier. Il est décédé en 2019 toujours abonné.</p>
+    <p>La résiliation, quant à elle, nécessite l'envoi d'une lettre recommandée, d'une photocopie de passeport, d'un extrait de naissance, et d'une preuve que vous avez effectivement existé pendant la durée de l'abonnement.</p>`
+  },
+  'La carte': {
+    titre: 'La Carte Magnétique',
+    phonetique: '/kaʁt maɲe.tik/ — artefact semi-légendaire, catégorie : objets perdus',
+    contenu: `<p>La carte magnétique LANAL− est l'un des objets les plus recherchés de l'histoire de l'audiovisuel français. Des archéologues ont estimé que 73% des cartes produites depuis 1984 reposent actuellement entre les coussins de canapés à travers la France.</p>
+    <p>Son fonctionnement reste mystérieux. Des experts ont émis l'hypothèse qu'elle "capte quelque chose", mais les recherches ont été interrompues faute de signal.</p>
+    <p>La carte possède une durée de vie théorique de 10 ans, mais une durée de vie pratique d'environ 18 mois, après quoi elle entre en phase de "désolation magnétique" et refuse de coopérer avec quoi que ce soit.</p>`
+  },
+  'Service client': {
+    titre: 'Le Service Client LANAL−',
+    phonetique: '/sɛʁ.vis kljɑ̃/ — oxymore institutionnalisé',
+    contenu: `<p>Le service client LANAL− a été fondé sur un principe simple : rendre l'aide au client suffisamment difficile pour que celui-ci abandonne spontanément et résolve son problème seul, ou l'accepte.</p>
+    <p>Le temps d'attente moyen enregistré est de 47 minutes, soit exactement la durée d'un épisode de série sans générique. Cette coïncidence n'en est probablement pas une.</p>
+    <p>La musique d'attente, composée spécialement pour LANAL−, a été cliniquement testée comme induisant une légère dissociation après 12 minutes d'écoute continue, phénomène que les techniciens appellent "l'état pré-raccrochage".</p>`
+  },
+  'Archives': {
+    titre: 'Les Archives LANAL−',
+    phonetique: '/aʁ.ʃiv/ — contenu classifié, accès restreint aux abonnés ayant un abonnement Archives+',
+    contenu: `<p>Les archives de LANAL− constituent un patrimoine audiovisuel d'une valeur inestimable, c'est-à-dire qu'elles n'ont jamais été estimées. Elles contiennent notamment l'intégralité des émissions diffusées depuis 1984, toutes cryptées.</p>
+    <p>Pour accéder aux archives, l'abonné doit souscrire à l'option Archives+, elle-même conditionnée à l'abonnement Prestige, lui-même nécessitant l'abonnement Intégral, dont le prix n'est "communiqué qu'après validation d'un formulaire de demande de prix".</p>`
+  },
+  'Séries': {
+    titre: 'Les Séries LANAL−',
+    phonetique: '/se.ʁi/ — récit interrompu en cliffhanger, renouvelé ou pas selon l\'humeur',
+    contenu: `<p>LANAL− est reconnue comme productrice de séries d'une qualité variant de "correct" à "inexplicablement primé à Cannes". La chaîne se distingue par sa capacité à annuler une série exactement après la fin de la saison 1, laissant des millions de téléspectateurs dans un vide narratif définitif.</p>
+    <p>La série la plus longue jamais produite par LANAL− est "Encore en Production", diffusée depuis 2003 et dont la saison 1 est toujours "en cours de finalisation".</p>`
+  }
+};
+
+// ─── MODAL ───
+function showModal(sujet) {
+  const data = articles[sujet];
+  let content = '';
+  if (data) {
+    content = `
+      <div style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--rouge);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.8rem">Article encyclopédique</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;margin-bottom:0.3rem">${data.titre}</h2>
+      <div style="font-style:italic;color:var(--gris);font-size:0.85rem;margin-bottom:1.2rem">${data.phonetique}</div>
+      <div style="font-size:0.92rem;line-height:1.85;color:#333">${data.contenu}</div>
+      <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--gris-clair);font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--gris)">Source : LANAL− Encyclopédie Libre · Article soumis à révision permanente · Dernière mise à jour : jamais vraiment</div>
+    `;
+  } else {
+    content = `
+      <div style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--rouge);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.8rem">Article en cours de rédaction</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;margin-bottom:1rem">${sujet}</h2>
+      <p style="font-size:0.92rem;line-height:1.85;color:#555">Cet article n'a pas encore été rédigé par nos encyclopédistes. Selon nos estimations, il le sera "bientôt", ce qui dans l'univers LANAL− signifie "dans un délai non contractuel".</p>
+      <p style="font-size:0.88rem;color:#888;margin-top:1rem;font-style:italic">En attendant, vous pouvez contribuer en envoyant un courrier recommandé avec vos suggestions à une adresse que nous vous communiquerons ultérieurement.</p>
+    `;
+  }
+  document.getElementById('modal-content').innerHTML = content;
+  document.getElementById('modal-overlay').classList.add('active');
+}
+
+function openEncycloEntry() {
+  showModal('Décodeur');
+  const data = {
+    titre: 'Le Décodeur',
+    phonetique: '/de.kɔ.dœʁ/ — boîtier de la discorde, pluriel : des décodeurs (rarement compatibles)',
+    contenu: `<p>Le décodeur LANAL− est un dispositif électronique dont la fonction principale est de décoder. Dans les faits, il effectue surtout des mises à jour. Selon une étude interne menée par LANAL− et aussitôt classifiée, le décodeur passe 67% de son temps à se mettre à jour, 18% à redémarrer après les mises à jour, et 15% à regarder les émissions avec l'abonné.</p>
+    <p>L'appareil est livré avec une télécommande comprenant 47 boutons dont 12 sont documentés dans le manuel. Les 35 autres déclenchent des fonctions connues uniquement des ingénieurs, qui ont quitté l'entreprise en 2009.</p>
+    <p>Le décodeur possède une sensibilité émotionnelle remarquable : il détecte les moments de forte tension narrative (finales de coupe, dernière scène d'un film, dénouement d'une série) pour y effectuer ses mises à jour les plus critiques.</p>`
+  };
+  document.getElementById('modal-content').innerHTML = `
+    <div style="font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--rouge);letter-spacing:0.2em;text-transform:uppercase;margin-bottom:0.8rem">Article encyclopédique</div>
+    <h2 style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;margin-bottom:0.3rem">${data.titre}</h2>
+    <div style="font-style:italic;color:var(--gris);font-size:0.85rem;margin-bottom:1.2rem">${data.phonetique}</div>
+    <div style="font-size:0.92rem;line-height:1.85;color:#333">${data.contenu}</div>
+    <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--gris-clair);font-family:'Space Mono',monospace;font-size:0.6rem;color:var(--gris)">Source : LANAL− Encyclopédie Libre · Article soumis à révision permanente</div>
+  `;
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modal-overlay').classList.remove('active');
+}
+
+// ─── TOAST ───
+function showToast(title, body) {
+  document.getElementById('toast-title').textContent = title;
+  document.getElementById('toast-body').textContent = body;
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4500);
+}
+
+// ─── RECHERCHE ───
+function handleSearch(e) {
+  if (e.key === 'Enter') handleSearchBtn();
+}
+function handleSearchBtn() {
+  const q = document.getElementById('searchInput').value.trim();
+  if (!q) return;
+  const keys = Object.keys(articles);
+  const found = keys.find(k => k.toLowerCase().includes(q.toLowerCase()) || q.toLowerCase().includes(k.toLowerCase()));
+  if (found) {
+    showModal(found);
+  } else {
+    showToast('Recherche : "' + q + '"', 'Aucun article trouvé. Nos encyclopédistes examinent votre demande. Revenez dans 3 à 5 jours ouvrés non garantis.');
+  }
+  document.getElementById('searchInput').value = '';
+}
+
+// ─── FLUX RSS (articles humoristiques simulés + vraies sources culturelles) ───
+const fakeNews = [
+  { source: 'LANAL− Dépêche', titre: 'Un abonné parvient à résilier son contrat : une première mondiale saluée par l\'ONU', date: 'Il y a 2 heures' },
+  { source: 'LANAL− Actu', titre: 'Le décodeur LANAL− se met à jour pendant le générique de fin — les 30 dernières secondes restent un mystère', date: 'Il y a 4 heures' },
+  { source: 'Science & LANAL−', titre: 'Des chercheurs confirment : le signal est "presque parfait" sauf quand vous regardez vraiment', date: 'Hier' },
+  { source: 'Société', titre: 'La télécommande universelle : le mythe du XXIe siècle qui résiste à toutes les télécommandes', date: 'Il y a 2 jours' },
+  { source: 'Economie LANAL−', titre: 'L\'abonnement mensuel augmente de 2€ — la prochaine augmentation aura lieu "avant la fin de votre visionnage"', date: 'Il y a 3 jours' },
+  { source: 'Culture', titre: 'Festival de Cannes : LANAL− diffusera la Palme d\'Or avec 14 mois de décalage pour "plus de suspense"', date: 'Il y a 4 jours' },
+  { source: 'Tech LANAL−', titre: 'Nouvelle mise à jour du décodeur : parmi les nouveautés, le bouton Power fonctionne maintenant du premier coup', date: 'Il y a 5 jours' },
+  { source: 'Juridique', titre: 'La Cour de justice confirme : "en clair le dimanche" ne signifie pas forcément quelque chose d\'intéressant', date: 'Il y a 6 jours' },
+];
+
+function renderRSS() {
+  const feed = document.getElementById('rss-feed');
+  document.getElementById('rss-loading').remove();
+  fakeNews.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'rss-item';
+    div.innerHTML = `
+      <div class="rss-num">0${i+1}</div>
+      <div class="rss-content">
+        <div class="rss-source">${item.source}</div>
+        <div class="rss-title">${item.titre}</div>
+        <div class="rss-date">${item.date}</div>
+      </div>
+    `;
+    div.addEventListener('click', () => showToast(item.source, item.titre));
+    feed.appendChild(div);
+  });
+}
+
+// Simulation de chargement RSS
+setTimeout(renderRSS, 1200);
+
+// Toast de bienvenue
+setTimeout(() => showToast('Bienvenue sur LANAL−', 'Votre signal est actuellement non-crypté. Profitez-en, ça ne durera pas.'), 2500);
+</script>
+</body>
+</html>
